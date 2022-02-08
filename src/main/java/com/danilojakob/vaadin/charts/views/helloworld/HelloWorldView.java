@@ -21,7 +21,33 @@ public class HelloWorldView extends VerticalLayout {
         setSpacing(true);
 
 
-        add(createTimeLineChart());
+        add(createTimeLineChart(), createStackedColumnChart());
+    }
+
+    private Chart createStackedColumnChart() {
+        Chart stackedColumnChart = new Chart(ChartType.COLUMN);
+        Configuration stackedColumnChartConfiguration = stackedColumnChart.getConfiguration();
+        ListSeries seriesA = new ListSeries("Series A", 300, 150, 550);
+        ListSeries seriesB = new ListSeries("Series B", 200, 50, 500);
+        DataSeries seriesC = new DataSeries("Series C");
+        for (int i = 0; i < 3; i++) {
+            DataSeriesItem item = new DataSeriesItem();
+            item.setY(300);
+            item.setX(i);
+            item.setColorIndex(5);
+            seriesC.add(item);
+        }
+        stackedColumnChartConfiguration.setTitle("Stacked Column Chart");
+        PlotOptionsColumn plotOptionsColumn = new PlotOptionsColumn();
+        plotOptionsColumn.setStacking(Stacking.NORMAL);
+        seriesA.setPlotOptions(plotOptionsColumn);
+        seriesB.setPlotOptions(plotOptionsColumn);
+        seriesC.setPlotOptions(plotOptionsColumn);
+        stackedColumnChartConfiguration.addSeries(seriesA);
+        stackedColumnChartConfiguration.addSeries(seriesB);
+        stackedColumnChartConfiguration.addSeries(seriesC);
+
+        return stackedColumnChart;
     }
 
     private Chart createTimeLineChart() {
