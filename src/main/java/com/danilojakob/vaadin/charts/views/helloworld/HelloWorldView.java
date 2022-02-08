@@ -21,7 +21,29 @@ public class HelloWorldView extends VerticalLayout {
         setSpacing(true);
 
 
-        add(createTimeLineChart(), createStackedColumnChart());
+        add(createTimeLineChart(), createStackedColumnChart(), createDonutChart());
+    }
+
+    private Chart createDonutChart() {
+        Chart donutChart = new Chart(ChartType.PIE);
+        Configuration donutChartConfiguration = donutChart.getConfiguration();
+        PlotOptionsPie plotOptionsPie = new PlotOptionsPie();
+        plotOptionsPie.setInnerSize("80%");
+        donutChartConfiguration.setTitle("Donut Chart");
+        donutChartConfiguration.getTooltip().setEnabled(true);
+        donutChartConfiguration.getLegend().setEnabled(true);
+        donutChartConfiguration.setPlotOptions(plotOptionsPie);
+        DataSeries donutSeries = new DataSeries();
+        donutSeries.add(new DataSeriesItem("Firefox", 45.0));
+        donutSeries.add(new DataSeriesItem("IE", 26.8));
+        donutSeries.add(new DataSeriesItem("Chrome", 12.8));
+        donutSeries.add(new DataSeriesItem("Safari", 8.5));
+        donutSeries.add(new DataSeriesItem("Opera", 6.2));
+        donutSeries.add(new DataSeriesItem("Others", 0.7));
+        donutChartConfiguration.addSeries(donutSeries);
+
+        return donutChart;
+
     }
 
     private Chart createStackedColumnChart() {
@@ -40,9 +62,10 @@ public class HelloWorldView extends VerticalLayout {
         stackedColumnChartConfiguration.setTitle("Stacked Column Chart");
         PlotOptionsColumn plotOptionsColumn = new PlotOptionsColumn();
         plotOptionsColumn.setStacking(Stacking.NORMAL);
-        seriesA.setPlotOptions(plotOptionsColumn);
-        seriesB.setPlotOptions(plotOptionsColumn);
-        seriesC.setPlotOptions(plotOptionsColumn);
+        stackedColumnChartConfiguration.setPlotOptions(plotOptionsColumn);
+//        seriesA.setPlotOptions(plotOptionsColumn);
+//        seriesB.setPlotOptions(plotOptionsColumn);
+//        seriesC.setPlotOptions(plotOptionsColumn);
         stackedColumnChartConfiguration.addSeries(seriesA);
         stackedColumnChartConfiguration.addSeries(seriesB);
         stackedColumnChartConfiguration.addSeries(seriesC);
